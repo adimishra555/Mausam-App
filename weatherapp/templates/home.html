@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="GET" action="{% url 'get_weather' %}" class="input-group mb-4">
+                <input type="text" name="city" class="form-control" placeholder="Enter city" required>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    {% if weather %}
+        {% if weather.error %}
+            <div class="alert alert-danger text-center">{{ weather.error }}</div>
+        {% else %}
+        <h5><strong>Date:</strong> {{ weather.current_date }}</h5>
+            <div class="row justify-content-center weather-card mt-5">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h2>{{ weather.city }}</h2>
+                            
+                            <div class="text-center mb-4">
+                                <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@4x.png" 
+                                     alt="Weather icon" 
+                                     class="img-fluid rounded-circle shadow-lg" 
+                                     style="width: 150px; height: 150px;">
+                                <p class="mt-2">Current Weather: {{ weather.description }}</p>
+                            </div>
+                            <h4>{{ weather.description|title }}</h4>
+                            <h3 class="display-4">{{ weather.temperature }}°C</h3>
+                            <hr class="bold-hr">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+                                    <p><strong>Wind:</strong> {{ weather.wind_speed }} km/h</p>
+    
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Sunrise:</strong> {{ weather.sunrise }}</p>
+                                    <p><strong>Sunset:</strong> {{ weather.sunset }}</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <center><p><strong>Wind Direction: </strong> {{ weather.wind_direction }}°</p></center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}
